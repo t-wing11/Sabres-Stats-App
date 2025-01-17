@@ -1,21 +1,21 @@
 package com.example.sabresapp.ui.viewModel
 
+import com.example.sabresapp.data.Player
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.sabresapp.data.Team
 import com.example.sabresapp.network.Repository
 import kotlinx.coroutines.launch
 
-class RosterViewModel(private val repository: Repository) : ViewModel() {
-    private val _rosterData = MutableLiveData<Team?>()
-    val rosterData: LiveData<Team?> get() = _rosterData
+class PlayerStatsViewModel(private val repository: Repository) : ViewModel() {
+    private val _playerData = MutableLiveData<Player?>()
+    val playerData: LiveData<Player?> get() = _playerData
 
-    fun fetchRoster(season: String) {
+    fun fetchPlayerData(playerId: String) {
         viewModelScope.launch {
-            repository.getRoster(season, _rosterData)
+            repository.getPlayerInfo(playerId, _playerData)
         }
     }
 
@@ -23,9 +23,9 @@ class RosterViewModel(private val repository: Repository) : ViewModel() {
 
     class Factory(private val repository: Repository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(RosterViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(PlayerStatsViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return RosterViewModel(repository) as T
+                return PlayerStatsViewModel(repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

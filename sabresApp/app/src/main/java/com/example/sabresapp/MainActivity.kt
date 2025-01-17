@@ -15,10 +15,12 @@ import com.example.sabresapp.ui.compose.HomeScreen
 import com.example.sabresapp.ui.compose.PlayerPage
 import com.example.sabresapp.ui.compose.ResultsScreen
 import com.example.sabresapp.ui.theme.SabresAppTheme
+import com.example.sabresapp.ui.viewModel.PlayerStatsViewModel
 import com.example.sabresapp.ui.viewModel.RosterViewModel
 
 class MainActivity : ComponentActivity() {
     private lateinit var rosterViewModel: RosterViewModel
+    private lateinit var playerViewModel: PlayerStatsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,11 @@ class MainActivity : ComponentActivity() {
             this,
             RosterViewModel.Factory(repository)
         )[RosterViewModel::class.java]
+
+        playerViewModel = ViewModelProvider(
+            this,
+            PlayerStatsViewModel.Factory(repository)
+        )[PlayerStatsViewModel::class.java]
 
         setContent{
             SabresAppTheme {
@@ -47,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("player/{playerId}") { backStackEntry ->
                         val playerId = backStackEntry.arguments?.getString("playerId")
-                        PlayerPage(playerId = playerId, viewModel = rosterViewModel)
+                        PlayerPage(playerId = playerId, viewModel = playerViewModel)
                     }
                 }
             }

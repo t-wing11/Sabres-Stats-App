@@ -1,0 +1,25 @@
+query PlayerList($playerId: ID!) {
+    playerInfo(playerId: $playerId) {
+        playerId
+        headshot
+        firstName
+        lastName
+        sweaterNumber
+        position
+        shootsCatches
+        heightInInches
+        weightInPounds
+        birthDate
+        birthCity
+        birthStateProvince
+        birthCountry
+        seasonTotals {
+            season
+            team
+            goals
+            assists
+            points
+            gamesPlayed
+        }
+    }
+}

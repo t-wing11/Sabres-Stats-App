@@ -131,7 +131,7 @@ fun PlayerInfoPreview() {
                 headshot = "https://assets.nhle.com/mugs/nhl/20212022/BUF/8482061.png",
                 sweaterNumber = 52,
                 shoots = "L",
-                height = 72,
+                height = 72.toString(),
                 weight = 165,
                 birthDate = "1998-03-11",
                 birthCity = "Sherwood Park",

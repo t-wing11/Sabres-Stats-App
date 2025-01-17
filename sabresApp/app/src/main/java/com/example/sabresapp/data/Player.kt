@@ -12,10 +12,11 @@ data class Player(
     val headshot: String,
     val sweaterNumber: Int?,
     val shoots: String,
-    val height: Int,
-    val weight: Int,
-    val birthDate: String,
-    val birthCity: String,
-    val birthStateProvince: String?,
-    val birthCountry: String,
+    val height: String = "",
+    val weight: Int? = null,
+    val birthDate: String? = null,
+    val birthCity: String? = null,
+    val birthStateProvince: String? = null,
+    val birthCountry: String? = null,
+    val seasonTotals: List<PlayerStats>? = null
 ) : Parcelable
