@@ -23,17 +23,23 @@ class Repository {
                 Team(
                     name = "Buffalo Sabres",
                     season = season,
-                    players = roster.mapNotNull { teamRoster ->
+                    players = roster.map { teamRoster ->
                         teamRoster.let {
-                            it.sweaterNumber?.let { it1 ->
                                 Player(
+                                    id = it.id,
                                     firstName = it.firstName,
                                     lastName = it.lastName,
                                     positionCode = it.positionCode,
                                     headshot = it.headshot,
-                                    sweaterNumber = it1
+                                    sweaterNumber = it.sweaterNumber,
+                                    shoots = it.shootsCatches,
+                                    height = it.heightInInches,
+                                    weight = it.weightInPounds,
+                                    birthDate = it.birthDate,
+                                    birthCity = it.birthCity,
+                                    birthStateProvince = it.birthStateProvince,
+                                    birthCountry = it.birthCountry
                                 )
-                            }
                         }
                     }
                 )

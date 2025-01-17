@@ -1,10 +1,18 @@
 #Query the 2010 buffalo sabres roster and return names and positions of all players in a list not seperate ones
 query RosterList($season: String!) {
     teamRoster(teamId: "BUF", season: $season) {
+        id
         firstName
         lastName
         positionCode
         headshot
         sweaterNumber
+        shootsCatches
+        heightInInches
+        weightInPounds
+        birthDate
+        birthCity
+        birthStateProvince
+        birthCountry
     }
 }

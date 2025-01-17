@@ -2,11 +2,11 @@ package com.example.sabresapp.ui.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,22 +23,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.sabresapp.data.Player
+import com.example.sabresapp.ui.theme.customBlue
+import com.example.sabresapp.ui.theme.customYellow
 import com.example.sabresapp.ui.viewModel.RosterViewModel
 
 @Composable
 fun ResultsScreen(
     rosterViewModel: RosterViewModel,
     season: String?,
+    navController: NavController
 ) {
-    val customBlue = Color(0xFF003087)
-    val customYellow = Color(0xFFFFB81C)
-
     val rosterData by rosterViewModel.rosterData.observeAsState()
 
     LaunchedEffect(season) {
@@ -56,15 +57,16 @@ fun ResultsScreen(
                 }
 
             }
-            // Display the roster in form of rosterdata.players
+
             LazyColumn {
                 items(rosterData!!.players) { player ->
                     PlayerInfo(
-                        firstName = player.firstName,
-                        lastName = player.lastName,
-                        position = player.positionCode,
-                        headshot = player.headshot,
-                        sweaterNumber = player.sweaterNumber
+                        playerData = player,
+                        onPlayerClick = {
+                            navController.navigate("player/${player.id}") {
+                                launchSingleTop = true
+                            }
+                        }
                     )
                 }
             }
@@ -78,20 +80,15 @@ fun ResultsScreen(
 
 @Composable
 fun PlayerInfo(
-    firstName: String,
-    lastName: String,
-    position: String,
-    headshot: String,
-    sweaterNumber: Int
+   playerData: Player,
+   onPlayerClick: () -> Unit = {}
 ) {
-
-    val customBlue = Color(0xFF003087)
-    val customYellow = Color(0xFFFFB81C)
 
     Box(modifier = Modifier
         .background(customBlue)
         .fillMaxWidth()
         .border(1.dp, customYellow)
+        .clickable { onPlayerClick() }
     ) {
         Row(
             modifier = Modifier
@@ -99,24 +96,23 @@ fun PlayerInfo(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(headshot)
+                    .data(playerData.headshot)
                     .crossfade(true)
                     .build(),
-                contentDescription = "$firstName $lastName's headshot",
+                contentDescription = "${playerData.firstName} ${playerData.lastName}'s headshot",
                 modifier = Modifier
                     .size(100.dp)
                     .padding(end = 16.dp)
             )
             Column(
                 modifier = Modifier
-                    .padding(top = 12.dp)
-                ,
+                    .padding(top = 12.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "$firstName $lastName", fontSize = 20.sp,  modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
-                Text(text = "Position: $position", fontSize = 15.sp, modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
-                Text(text = "Number: $sweaterNumber", fontSize = 15.sp, modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
+                Text(text = "${playerData.firstName} ${playerData.lastName}", fontSize = 20.sp,  modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
+                Text(text = "Position: ${playerData.positionCode}", fontSize = 15.sp, modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
+                Text(text = "Number: ${playerData.sweaterNumber}", fontSize = 15.sp, modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
             }
         }
     }
@@ -127,11 +123,22 @@ fun PlayerInfo(
 fun PlayerInfoPreview() {
     MaterialTheme {
         PlayerInfo(
-            firstName = "Brandon",
-            lastName = "Biro",
-            position = "L",
-            headshot = "https://assets.nhle.com/mugs/nhl/20212022/BUF/8482061.png",
-            sweaterNumber = 52
+            playerData = Player(
+                id = "8482061",
+                firstName = "Brandon",
+                lastName = "Biro",
+                positionCode = "L",
+                headshot = "https://assets.nhle.com/mugs/nhl/20212022/BUF/8482061.png",
+                sweaterNumber = 52,
+                shoots = "L",
+                height = 72,
+                weight = 165,
+                birthDate = "1998-03-11",
+                birthCity = "Sherwood Park",
+                birthStateProvince = "AB",
+                birthCountry = "CAN"
+            ),
+            onPlayerClick = { }
         )
     }
 }

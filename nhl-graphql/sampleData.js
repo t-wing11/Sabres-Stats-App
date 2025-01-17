@@ -38,4 +38,18 @@ async function fetchRoster(team, season) {
   }
 }
 
+// Fetch player stats for all seasons
+// async function fetchPlayerStats(playerId) {
+//   try {
+//     const response = await axios.get(`${NHL_API_BASE_URL}/${playerId}/landing`);
+    
+//     // Return the entire stats data for the player
+//     return response.data.stats;
+//   } catch (error) {
+//     console.error("Error fetching player stats:", error);
+//     return null;
+//   }
+// }
+
+
 module.exports = { fetchRoster };
