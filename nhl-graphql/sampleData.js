@@ -23,14 +23,7 @@ async function fetchRoster(team, season) {
       sweaterNumber: player.sweaterNumber,
       positionCode: player.positionCode,
       shootsCatches: player.shootsCatches,
-      heightInInches: player.heightInInches,
-      weightInPounds: player.weightInPounds,
-      heightInCentimeters: player.heightInCentimeters,
-      weightInKilograms: player.weightInKilograms,
-      birthDate: player.birthDate,
-      birthCity: player.birthCity.default,
-      birthStateProvince: player.birthStateProvince?.default || "",
-      birthCountry: player.birthCountry,
+
     }));
   } catch (error) {
     console.error(`Failed to fetch roster for team ${team} and season ${season}:`, error);
@@ -38,18 +31,51 @@ async function fetchRoster(team, season) {
   }
 }
 
-// Fetch player stats for all seasons
-// async function fetchPlayerStats(playerId) {
-//   try {
-//     const response = await axios.get(`${NHL_API_BASE_URL}/${playerId}/landing`);
-    
-//     // Return the entire stats data for the player
-//     return response.data.stats;
-//   } catch (error) {
-//     console.error("Error fetching player stats:", error);
-//     return null;
-//   }
-// }
+async function fetchPlayerInfo(playerId) {
+  try {
+    const response = await axios.get(`${NHL_API_BASE_URL}/player/${playerId}/landing`);
+    //print the response
+    // console.log(response.data);
+    const playerInfo = response.data;
 
 
-module.exports = { fetchRoster };
+    const seasonTotals = Array.isArray(playerInfo.seasonTotals) ? playerInfo.seasonTotals
+    .filter(season => season.gameTypeId === 2 && season.leagueAbbrev === "NHL")
+    .map(season => ({
+      season: season.season,
+      team: season.team,
+      goals: season.goals,
+      assists: season.assists,
+      gamesPlayed: season.gamesPlayed,
+      points: season.points,
+      leagueAbbrev: season.leagueAbbrev,
+      gameTypeId: season.gameTypeId
+  })) : [];
+    // Map the playerInfo the playerinfo type structure
+    return {
+      playerId: playerInfo.playerId,
+      headshot: playerInfo.headshot,
+      firstName: playerInfo.firstName.default,
+      lastName: playerInfo.lastName.default,
+      sweaterNumber: playerInfo.sweaterNumber,
+      position: playerInfo.position,
+      shootsCatches: playerInfo.shootsCatches,
+      heightInInches: playerInfo.heightInInches,
+      weightInPounds: playerInfo.weightInPounds,
+      birthDate: playerInfo.birthDate,
+      birthCity: playerInfo.birthCity.default,
+      birthStateProvince: playerInfo.birthStateProvince.default,
+      birthCountry: playerInfo.birthCountry,
+      seasonTotals: seasonTotals
+    };
+  }
+  catch (error) {
+    console.error(`Failed to fetch player info for player ${playerId}:`, error);
+    return [];
+  }
+
+
+}
+
+
+module.exports = { fetchRoster, fetchPlayerInfo };

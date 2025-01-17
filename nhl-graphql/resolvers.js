@@ -1,5 +1,5 @@
 const { fetchRoster } = require("./sampleData");
-const { fetchPlayerStats } = require("./sampleData");
+const { fetchPlayerInfo } = require("./sampleData");
 
 const resolvers = {
   Query: {
@@ -9,11 +9,12 @@ const resolvers = {
     teamRoster: async (_, { teamId, season }) => {
       // Fetch roster for the given team and season
       return await fetchRoster(teamId, season);
+    },
+    playerInfo: async (_, { playerId }) => {
+      // Fetch player info for the given player
+      return await fetchPlayerInfo(playerId);
     }
-    // playerStats: async (_, { playerId }) => {
-    //   // Fetch stats for the given player and season
-    //   return await fetchPlayerStats(playerId);
-    // },
+    
   },
 };
 

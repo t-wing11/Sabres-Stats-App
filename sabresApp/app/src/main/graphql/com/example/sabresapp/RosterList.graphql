@@ -8,11 +8,5 @@ query RosterList($season: String!) {
         headshot
         sweaterNumber
         shootsCatches
-        heightInInches
-        weightInPounds
-        birthDate
-        birthCity
-        birthStateProvince
-        birthCountry
     }
 }
