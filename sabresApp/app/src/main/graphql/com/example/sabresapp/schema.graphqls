@@ -25,7 +25,7 @@ type Player {
 type SeasonTotal {
   season: String!
 
-  team: String!
+  teamName: String!
 
   goals: Int!
 

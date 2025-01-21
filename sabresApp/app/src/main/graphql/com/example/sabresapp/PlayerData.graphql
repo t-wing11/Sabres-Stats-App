@@ -15,7 +15,7 @@ query PlayerList($playerId: ID!) {
         birthCountry
         seasonTotals {
             season
-            team
+            teamName
             goals
             assists
             points

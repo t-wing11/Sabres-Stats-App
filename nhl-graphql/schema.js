@@ -19,7 +19,7 @@ const typeDefs = gql`
 
   type SeasonTotal {
     season: String!
-    team: String!
+    teamName: String!
     goals: Int!
     assists: Int!
     points: Int!

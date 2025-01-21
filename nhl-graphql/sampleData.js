@@ -43,7 +43,7 @@ async function fetchPlayerInfo(playerId) {
     .filter(season => season.gameTypeId === 2 && season.leagueAbbrev === "NHL")
     .map(season => ({
       season: season.season,
-      team: season.team,
+      teamName: season.teamName.default,
       goals: season.goals,
       assists: season.assists,
       gamesPlayed: season.gamesPlayed,

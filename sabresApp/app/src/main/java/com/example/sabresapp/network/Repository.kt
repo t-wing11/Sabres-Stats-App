@@ -1,6 +1,7 @@
 package com.example.sabresapp.network
 
 import ApolloInstance
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.sabresapp.PlayerListQuery
 import com.example.sabresapp.RosterListQuery
@@ -52,6 +53,8 @@ class Repository {
             val response = withContext(Dispatchers.IO) {
                 ApolloInstance.apolloClient.query(PlayerListQuery(playerId)).execute()
             }
+            Log.d("tag", "response ${response.errors}")
+
 
             // Safely handle potential null data
             val player = response.data?.playerInfo?.let { playerInfo ->
@@ -76,11 +79,11 @@ class Repository {
                             goals = seasonTotal.goals,
                             assists = seasonTotal.assists,
                             points = seasonTotal.points,
+                            team = seasonTotal.teamName
                         )
                     }
                 )
             }
-
             playerData.postValue(player)
         } catch (e: Exception) {
             // Handle errors (e.g., log or pass a meaningful error message)
