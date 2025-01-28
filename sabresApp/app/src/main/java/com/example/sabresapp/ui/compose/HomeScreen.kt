@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.MaterialTheme
@@ -34,23 +35,25 @@ fun HomeScreen(navController: NavController) {
             .fillMaxSize()
             .background(customBlue),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.Center
     ) {
+        Text(text = "Buffalo Sabres Rosters", fontSize = 30.sp, color = Color.White)
         Column(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(top = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp))
         {
-            Text(text = "Sabres through the Seasons", fontSize = 30.sp, color = Color.White)
+
             Text(text = "Select a season to view results", fontSize = 20.sp,  color = Color.White)
             DropDown(onItemSelected = { season ->
-                selectedSeason.value = season
+                val season1 = season.replace("–", "")
+                selectedSeason.value = season1
             })
             Button(
                 modifier = Modifier,
                 shape = RectangleShape,
                 onClick = {
-                    Log.d("tag", "selected season: ${selectedSeason.value}")
                     navController.navigate("result/${selectedSeason.value}")
                 },
                 colors = ButtonColors(
@@ -60,7 +63,9 @@ fun HomeScreen(navController: NavController) {
                 )
             )
             {
-                Text(text = "View ${selectedSeason.value} Roster")
+                val mid = selectedSeason.value.length / 2
+                val newString = selectedSeason.value.slice(0 until mid) + "–" + selectedSeason.value.slice(mid until selectedSeason.value.length)
+                Text(text = "View $newString Roster")
             }
         }
     }

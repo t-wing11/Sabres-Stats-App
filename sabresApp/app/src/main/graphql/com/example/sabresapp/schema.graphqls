@@ -63,7 +63,7 @@ type PlayerInfo {
 
   birthCity: String!
 
-  birthStateProvince: String!
+  birthStateProvince: String
 
   birthCountry: String!
 

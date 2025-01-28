@@ -1,5 +1,6 @@
 package com.example.sabresapp.ui.compose
 
+import android.util.Log
 import androidx.compose.foundation.background
 import com.example.sabresapp.R
 import androidx.compose.foundation.clickable

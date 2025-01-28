@@ -1,5 +1,6 @@
 package com.example.sabresapp.ui.compose
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -63,6 +64,7 @@ fun ResultsScreen(
                     PlayerInfo(
                         playerData = player,
                         onPlayerClick = {
+                            Log.d("id", player.id)
                             navController.navigate("player/${player.id}") {
                                 launchSingleTop = true
                             }
@@ -110,9 +112,27 @@ fun PlayerInfo(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "${playerData.firstName} ${playerData.lastName}", fontSize = 20.sp,  modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
-                Text(text = "Position: ${playerData.positionCode}", fontSize = 15.sp, modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
-                Text(text = "Number: ${playerData.sweaterNumber}", fontSize = 15.sp, modifier = Modifier.padding(bottom = 8.dp), color = Color.White)
+                Text(
+                    text = "${playerData.firstName} ${playerData.lastName}",
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp),
+                    color = Color.White
+                )
+                Text(
+                    text = "Position: ${playerData.positionCode}",
+                    fontSize = 15.sp,
+                    modifier = Modifier
+                        .padding(bottom = 4.dp),
+                    color = Color.White
+                )
+                Text(
+                    text = "Number: ${playerData.sweaterNumber}",
+                    fontSize = 15.sp,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp),
+                    color = Color.White
+                )
             }
         }
     }

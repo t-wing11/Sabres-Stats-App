@@ -1,6 +1,5 @@
 package com.example.sabresapp.ui.compose
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -24,17 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.test.services.storage.file.PropertyFile.Column
-import com.example.sabresapp.ui.theme.customBlue
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.sabresapp.data.Player
 import com.example.sabresapp.data.PlayerStats
 import com.example.sabresapp.network.Repository
-import com.example.sabresapp.type.SeasonTotal
+import com.example.sabresapp.ui.theme.customBlue
 import com.example.sabresapp.ui.theme.customYellow
 import com.example.sabresapp.ui.viewModel.PlayerStatsViewModel
 
@@ -70,14 +68,13 @@ fun PlayerPage(
                 .border(1.dp, customYellow)
         )
         Text(text = "${playerData?.firstName} ${playerData?.lastName}",
-            fontSize = 20.sp,
+            fontSize = 25.sp,
             modifier = Modifier.padding(top = 8.dp),
             color = Color.White
         )
         Row(
             modifier = Modifier
         ) {
-
             Column(
                 modifier = Modifier.padding(top = 8.dp, end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -101,8 +98,9 @@ fun PlayerPage(
             modifier = Modifier.padding(top = 8.dp),
             color = Color.White
         )
+        val birthStateProvince = playerData?.birthStateProvince ?: ""
         Text(
-            text = "Birthplace: ${playerData?.birthCity}, ${playerData?.birthStateProvince}, ${playerData?.birthCountry}",
+            text = "Birthplace: ${playerData?.birthCity}, $birthStateProvince ${playerData?.birthCountry}",
             modifier = Modifier.padding(vertical = 8.dp),
             color = Color.White
         )
@@ -136,7 +134,8 @@ fun PlayerStatsTable(playerStats: List<PlayerStats>) {
                         .padding(horizontal = 8.dp)
                         .widthIn(max = 100.dp), // Set a max width if needed
                     maxLines = 1,
-                    color = Color.White
+                    color = Color.White,
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -160,14 +159,15 @@ fun PlayerStatsRow(stat: PlayerStats) {
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .border(1.dp, customYellow),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
             Text(
-                text = stat.season,
+                text = formatSeason(stat.season),
                 fontSize = 20.sp,
-                modifier = Modifier.widthIn(max = 120.dp)
-                    .padding(horizontal = 3.dp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(80.dp)
+                    .padding(horizontal = 7.dp),
                 color = Color.White
             )
         }
@@ -175,8 +175,9 @@ fun PlayerStatsRow(stat: PlayerStats) {
             Text(
                 text = stat.team,
                 fontSize = 20.sp,
-                modifier = Modifier.widthIn(max = 150.dp)
-                    .padding(horizontal = 3.dp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.widthIn(max = 75.dp)
+                    .padding(horizontal = 13.dp),
                 color = Color.White
             )
         }
@@ -184,8 +185,8 @@ fun PlayerStatsRow(stat: PlayerStats) {
             Text(
                 text = stat.gamesPlayed.toString(),
                 fontSize = 20.sp,
-                modifier = Modifier.
-                widthIn(max = 50.dp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(40.dp),
                 color = Color.White
             )
         }
@@ -193,8 +194,8 @@ fun PlayerStatsRow(stat: PlayerStats) {
             Text(
                 text = stat.goals.toString(),
                 fontSize = 20.sp,
-                modifier = Modifier.
-                widthIn(max = 50.dp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(30.dp),
                 color = Color.White
             )
         }
@@ -202,8 +203,8 @@ fun PlayerStatsRow(stat: PlayerStats) {
             Text(
                 text = stat.assists.toString(),
                 fontSize = 20.sp,
-                modifier = Modifier
-                    .widthIn(max = 50.dp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(30.dp),
                 color = Color.White
             )
         }
@@ -211,12 +212,19 @@ fun PlayerStatsRow(stat: PlayerStats) {
             Text(
                 text = stat.points.toString(),
                 fontSize = 20.sp,
-                modifier = Modifier
-                    .widthIn(max = 50.dp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(30.dp),
                 color = Color.White
             )
         }
     }
+}
+
+//Make a function to take a string like 19791980 and turn it into 79-80
+fun formatSeason(season: String): String {
+    val startYear = season.substring(2, 4) // Extract "79" from "1979"
+    val endYear = season.substring(6, 8)  // Extract "80" from "1980"
+    return "  $startYear-$endYear"          // Combine into "79-80"
 }
 
 //@Preview(showBackground = true)
@@ -231,18 +239,19 @@ fun PlayerStatsRow(stat: PlayerStats) {
 //        )
 //    }
 //}
-
-@Preview(showBackground = true)
+//
+@Preview(showBackground = false)
 @Composable
 fun PlayerStatsPreview() {
     MaterialTheme {
         PlayerStatsTable(
             playerStats = listOf(
-                PlayerStats("2020-2021", "BUFfalo Sabres", 56, 15, 18, 33),
-                PlayerStats("2019-2020", "BUF", 68, 20, 25, 45),
-                PlayerStats("2018-2019", "BUF", 82, 30, 40, 70),
-                PlayerStats("2017-2018", "BUF", 82, 25, 35, 60),
-                PlayerStats("2016-2017", "BUF", 82, 20, 30, 50),
+                PlayerStats("20202021", "BUF", 56, 15, 18, 33),
+                PlayerStats("20192020", "BUF", 68, 20, 25, 45),
+                PlayerStats("20182019", "BUF", 82, 30, 40, 70),
+                PlayerStats("20172018", "BUF", 82, 25, 35, 60),
+                PlayerStats("20162017", "BUF", 82, 20, 30, 50),
+                PlayerStats("20152016", "BUF", 4, 4, 4, 4),
             )
         )
     }

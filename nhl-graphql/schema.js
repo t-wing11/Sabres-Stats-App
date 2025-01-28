@@ -40,7 +40,7 @@ const typeDefs = gql`
     weightInPounds: Int!
     birthDate: String!
     birthCity: String!
-    birthStateProvince: String!
+    birthStateProvince: String
     birthCountry : String!
     seasonTotals: [SeasonTotal!]!
   }

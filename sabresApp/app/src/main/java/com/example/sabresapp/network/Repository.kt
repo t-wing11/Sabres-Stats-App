@@ -53,9 +53,6 @@ class Repository {
             val response = withContext(Dispatchers.IO) {
                 ApolloInstance.apolloClient.query(PlayerListQuery(playerId)).execute()
             }
-            Log.d("tag", "response ${response.errors}")
-
-
             // Safely handle potential null data
             val player = response.data?.playerInfo?.let { playerInfo ->
                 Player(
