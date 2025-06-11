@@ -77,7 +77,7 @@ apollo {
         generateKotlinModels.set(true)
         packageName.set("com.example.sabresapp")
         introspection {
-            endpointUrl.set("http://192.168.2.196:4000/graphql")
+            endpointUrl.set("http://192.168.50.173:4000/graphql")
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }
     }
