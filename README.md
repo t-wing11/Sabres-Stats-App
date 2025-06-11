@@ -28,3 +28,17 @@ Replace the placeholder IP address in the app’s code with your computer’s lo
 Ensure your Android device is connected to the same local network as your computer.
 
 Launch the app and start exploring Buffalo Sabres rosters and player stats!
+
+🖼️ App Screenshots
+Home Screen		
+
+<img src="https://github.com/user-attachments/assets/2c3371f0-3a09-41ac-9caf-f2767e2465d2" width="250"/>
+
+Roster Screen
+
+<img src="https://github.com/user-attachments/assets/81513b1c-b283-4af4-97d3-e5be8eba5628" width="250"/>
+
+Profile Page
+
+<img src="https://github.com/user-attachments/assets/e2ad3438-4214-4439-87d8-82080e7c8ae6" width="250"/>
+
