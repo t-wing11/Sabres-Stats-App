@@ -1,20 +1,27 @@
 # Sabres-Stats-App
 
-Android app that utilizes the official nhl api to lookup previous buffalo sabres rosters and have the roster displayed with key information about them.
+Sabres Stats App is an Android application that leverages the official NHL API to provide detailed historical roster information for the Buffalo Sabres. Users can view team rosters from previous seasons, along with key player details. Tapping on a player reveals their year-by-year NHL career statistics.
 
-Also have the ability to click onto a player and view there career stats in the NHL year by year.
+📦 Backend
+The backend is powered by an Apollo GraphQL server.
+To start the server:
 
-Back End
+Navigate to the graphql directory.
 
-Graphql Apollo server, cd into the graphl folder and use node index.js to run it. 
-The server will will use localHost 4000. Need to have the backend running on your computer for the app to work.
+Run the command: node index.js.
 
-App
+The server runs locally on http://localhost:4000 and must be running for the app to function correctly.
 
-Android app using jetpack compose for the front end ui and used MVVM architecture to design the apps structure.
-Queries graphql server to populate the roster and player information. 
+📱 Android App
+Built with Jetpack Compose for a modern, responsive UI.
 
-How to Run
+Follows MVVM (Model-View-ViewModel) architecture for clean code organization and separation of concerns.
 
-Need to replace local computer ip address in the repo with your computers specific address. Or else the app won't be able to access the locally run server.
-App must be on a phone that is using the same network as your computer that is running the backend server
+Communicates with the backend using GraphQL to fetch roster and player data.
+
+🚀 How to Run
+Replace the placeholder IP address in the app’s code with your computer’s local IP address (the one hosting the GraphQL server).
+
+Ensure your Android device is connected to the same local network as your computer.
+
+Launch the app and start exploring Buffalo Sabres rosters and player stats!
